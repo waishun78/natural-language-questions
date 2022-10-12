@@ -18,7 +18,7 @@
  - Test set in the fullwiki setting http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_test_fullwiki_v1.json The context in the file is paragraphs obtained using the author's retrieval system, which might or might not contain the gold paragraphs.
 
  A sample of the data is as shown below:
- '''
+ ```
  {
   "supporting_facts": [
     [
@@ -52,7 +52,7 @@
   "_id": "5a7a06935542990198eaf050",
   "type": "comparison"
   }
-'''
+```
 
 The top level structure of each JSON file is a list, where each entry represents a question-answer data point. Each data point is a dict with the following keys:
 
@@ -67,8 +67,10 @@ There are other keys that are not used in our code, but might be used for other 
 - type: either comparison or bridge, indicating the question type. (See our paper for more details).
 - level: one of easy, medium, and hard. (See paper for more details).
 
-For the purposes of this project, the 
-
+For the purpose of this project, I will be using
+hotpot_train_v1.1 : http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_train_v1.1.json
+hotpot_dev_distractor_v1 : http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v1.json
+datasets. The hotpot_train_v1.1 and hotpot_dev_distractor_v1 will be referred to train_set.json and dev_set.json respectively in subsequent sections. The former being the dataset used to train the model and the latter being the validation dataset.
 
  ### DistilBERT
  #### Motivation
@@ -76,11 +78,22 @@ For the purposes of this project, the
  "DistilBERT [is] a distilled version of BERT: smaller, faster, cheaper and lighter. DistilBERT is a small, fast, cheap and light Transformer model trained by distilling BERT base. It has 40% less parameters than bert-base-uncased, runs 60% faster while preserving over 95% of BERT’s performances as measured on the GLUE language understanding benchmark.".
 
  Hence, DistilBERT served as a good benchmark for future experiments in terms of the accuracy and training durations.
+ 
+ #### Preprocessing
+ First and foremost the inputs must be tokenised first using the DistilBertTokenizer before being fed into the
+ DistilBertQuestionAnswering model with model weights loaded using `from_pretrained()` from `distilbert-base-uncased`.
+ 
+ The model takes in input_ids, attention_mask, start_positions and end_positions among other inputs for the tuning of the model. This dictates that the answer to be found in the context inorder to be found in the answer, hence, questions containing with yes/no answers not found in the context are removed. (This change will be consistent throughout all the model experiments).
+ 
+ The context is then flattened and the start_position and end_positions of the words are located before the model is
+ trained.
+ 
  #### Results
- As the 
+ 
 
-
-
+ 
+ 
+ 
 
 
 
