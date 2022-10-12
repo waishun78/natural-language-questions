@@ -67,6 +67,8 @@ There are other keys that are not used in our code, but might be used for other 
 - type: either comparison or bridge, indicating the question type. (See our paper for more details).
 - level: one of easy, medium, and hard. (See paper for more details).
 
+For the purposes of this project, the 
+
 
  ### DistilBERT
  #### Motivation
