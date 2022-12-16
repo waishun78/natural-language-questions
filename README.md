@@ -97,9 +97,42 @@ datasets. The hotpot_train_v1.1 and hotpot_dev_distractor_v1 will be referred to
  
  Using the loss obtained at each batch, I calculated the loss and used that to optimise the model parameters.
  
- The model is then evaluated by using accuracy, recall and precision and compared with other models to find the efficacy of the model.
+ The model is then evaluated by using accuracy and precision (recall was calculated but not referenced) and compared with other models to find the efficacy of the model.
  
  #### Results
+ 
+ Due to time constraints and other limitations elaborated in the later section, I was only able to conduct fine-tuning with the number of training epochs and the batch size use for training.
+| Epoch      | Batch Size | Accuracy     | Precision     |
+| :---:        |    :----:   |          :---: |    :----:   |
+| 3      |    16     |   0.358   |   0.00293    |
+| 5      |    16     |   0.350   |   0.00202    |
+| 7      |    16     |   0.345   |   0.0148    |
+| 10      |    16     |   0.353   |   0.00497    |
+| 32      |    7     |   0.359   |   0.00346    |
+
+As the number of parameters needed to train the distilbert question and answering model is too large to run on my local computer (2.6 GHz 6-Core Intel Core i7, 16 GB RAM) as well as Google Colab Pro, I was reliant on external servers. 
+
+Accuracy and precision were the two primary evaluation criterion used. This is because accuracy can artificially inflate the efficacy of the model. As we see, the accuracy of all the models were significantly better than precision. This is likely due to the fact that the model would often predict a longer answer to make sure that the answer is captured in it. Precision accounts for that by penalising false positives/unnecessarily long answers).
+
+From our results, we observed that the combination of 7 epochs and batch size of 16 achieved a significantly higher precision but a slight deprovement on accuracy as compared to other experiments. Further analysis would be needed to ensure its validity and to understand the reason for this significant improvement in precision.
+
+ #### Limitations 
+ In light of the limited computing power available for the project, the following are a few measures that were taken to reduce the RAM usage for training while ensuring that the training time remains reasonable.
+ 
+ 1. Experimenting with the batch size. 
+  - Batch size refers to the number of samples that are used to train a model before updating the training model variables. With a smaller RAM available, the amount of data the computer can accumulate will be lower. This creates an upper bound for the maximum batch size we are able to run on the system. 
+
+.
+.
+.
+.
+
+ 
+ #### Future Improvements
+ What other things you wish to experiement on? 
+ Tokenisation without consideration truncation of the question.
+ Other models available
+
  
 
  
