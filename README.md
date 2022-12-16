@@ -80,13 +80,24 @@ datasets. The hotpot_train_v1.1 and hotpot_dev_distractor_v1 will be referred to
  Hence, DistilBERT served as a good benchmark for future experiments in terms of the accuracy and training durations.
  
  #### Preprocessing
- First and foremost the inputs must be tokenised first using the DistilBertTokenizer before being fed into the
- DistilBertQuestionAnswering model with model weights loaded using `from_pretrained()` from `distilbert-base-uncased`.
+ To feed the texts to the model, a tokenizer (corresponding to the desired question and answering model used) is used to tokenize the inputs. This converts the words to the corresponding token IDs in the pretrained vocabulary and format it for the model to use. It also generates other features like the attention mask, start_positions and end_positions.
+ ```train_encodings``` and ```val_encodings``` has keys:
+ - input_ids: tokenized values of the question and context for each dataset
+ - attention_mask: indicate what corresponding vales in the input_ids should be attended to and what should not be (has the same size as input_ids)
+ - start_positions: the index of the value in the input_ids at which the answer starts
+ - end_positions: the index of the value in the input_ids at which the answer ends
  
- The model takes in input_ids, attention_mask, start_positions and end_positions among other inputs for the tuning of the model. This dictates that the answer to be found in the context inorder to be found in the answer, hence, questions containing with yes/no answers not found in the context are removed. (This change will be consistent throughout all the model experiments).
+ The data set did not provide the start index and end index which would be used to do training. Hence, we had to manually search for the index of the answers in the context. Since the context was a nested list, it is  first flattened before the index was found using the ```.find()``` function. If the answer is not found in the original example, such as in the case of yes/no answers, the question was ignored.
  
- The context is then flattened and the start_position and end_positions of the words are located before the model is
- trained.
+ To load the dataset to the DistilBertForQuestionAnswering model, I initalised a custom Dataset object.
+ 
+ To fine-tune the pre-trained 'distilbert-base-uncased' model, I loaded the pre-trained model into the model. Using the AdamW optimiser on the model parameters, I trained the entire data set for n epochs. To load the dataset to the model to train, I used a dataloader that can specify the b batch_size for the training.
+ 
+ The hyperparameters batch_size and epochs are potential parameters that can be changed to obtain a better model.
+ 
+ Using the loss obtained at each batch, I calculated the loss and used that to optimise the model parameters.
+ 
+ The model is then evaluated by using accuracy, recall and precision and compared with other models to find the efficacy of the model.
  
  #### Results
  
