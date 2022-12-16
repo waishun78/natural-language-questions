@@ -101,6 +101,8 @@ datasets. The hotpot_train_v1.1 and hotpot_dev_distractor_v1 will be referred to
  
  #### Results
  
+ <SHOW SOME EXAMPLE OF HOW THE OUTPUT LOOKS LIKE WITH CODE>
+ 
  Due to time constraints and other limitations elaborated in the later section, I was only able to conduct fine-tuning with the number of training epochs and the batch size use for training.
 | Epoch      | Batch Size | Accuracy     | Precision     |
 | :---:        |    :----:   |          :---: |    :----:   |
