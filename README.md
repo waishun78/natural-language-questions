@@ -104,8 +104,7 @@ datasets. The hotpot_train_v1.1 and hotpot_dev_distractor_v1 will be referred to
 Example of answers produced by the model:
 | Number      | Question | Answer     | Predicted     |
 | :---:        |    :----:   |          :---: |    :----:   |
-| 1.| What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?
-| Chief of Protocol | lord high treasurer or lord treasurer was an english government position and has been a british government position since the acts of union of 1707. a holder of the post would be the third - highest - ranked great officer of state, below the lord high steward and the lord high chancellor. a kiss for corlissa kiss for corliss is a 1949 american comedy film directed by richard wallace and written by howard dimsdale. it stars shirley temple in her final starring role as well as her final film appearance. it is a sequel to the 1945 film " kiss and tell ". " a kiss for corliss " was retitled " almost a bride " before release and this title appears in the title sequence |
+| 1.| What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell? | Chief of Protocol | lord high treasurer or lord treasurer was an english government position and has been a british government position since the acts of union of 1707. a holder of the post would be the third - highest - ranked great officer of state, below the lord high steward and the lord high chancellor. a kiss for corlissa kiss for corliss is a 1949 american comedy film directed by richard wallace and written by howard dimsdale. it stars shirley temple in her final starring role as well as her final film appearance. it is a sequel to the 1945 film " kiss and tell ". " a kiss for corliss " was retitled " almost a bride " before release and this title appears in the title sequence |
 | 2.| What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species? | animorphs | animorphs " series, written by k. a. applegate. with respect to continuity within the series, it takes place before book # 23, " the pretender ", although the events told in the story occur between the time of " the ellimist chronicles " and " the andalite chronicles ". the book is introduced by tobias, who flies to the valley of the free hork - bajir, where jara hamee tells him the story of how the yeerks enslaved the hork - bajir, and how aldrea, an andalite, and her companion, dak hamee, a hork - bajir, tried to save their world from the invasion. jara |
 | 3.| The director of the romantic comedy "Big Stone Gap" is based in what New York city? | greenwich village, new york city | greenwich village, new york city. trigiani has published a novel a year since 2000. great eastern conventionsgreat eastern conventions, inc. was an entertainment company which produced comic book conventions, most actively during the years 1987 - 1996. in new york city, the great eastern shows filled the gap between the mid - 1980s demise of the annual comic art convention and creation conventions, and the establishment of promoter michael carbonaro's annual big apple comic con in 1996. from 1993 – 1995, great eastern hosted two new york city shows annually at the jacob k. javits convention center. great eastern also ran shows in new jersey, pennsylvania, massachusetts, oregon, minnesota, and texas. new york society of model engineersthe new york society of model engineers ( nysme ) was originally incorporated in 1926 in new york city. there are published records that show the society existed as early as 1905. in its early years, the organization moved to and from various locations throughout manhattan. at that time it was basically a gentlemen's club of members who were interested in all types of model building. in 1926 the society was formalized and incorporated under the laws of the state of new york. this |
 
@@ -115,7 +114,7 @@ Example of answers produced by the model:
 | 5      |    16     |   0.350   |   0.00202    |
 | 7      |    16     |   0.345   |   0.0148    |
 | 10      |    16     |   0.353   |   0.00497    |
-| 32      |    7     |   0.359   |   0.00346    |
+| 32      |    8     |   0.359   |   0.00346    |
 
 As the number of parameters needed to train the distilbert question and answering model is too large to run on my local computer (2.6 GHz 6-Core Intel Core i7, 16 GB RAM) as well as Google Colab Pro, I was reliant on external servers. 
 
@@ -131,9 +130,10 @@ However, from qualitative results, we can see that the answers predicted by the 
  1. Experimenting with the batch size. 
   - Batch size refers to the number of samples that are used to train a model before updating the training model variables. With a smaller RAM available, the amount of data the computer can accumulate will be lower. This creates an upper bound for the maximum batch size we are able to run on the system. 
 2. Increasing the GPU usage.
-- Using ```device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')# move model over to detected device
-```
-
+- Using ```device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')# move model over to detected device ``` while using Google Colab. However, even then, the kernel would crash prematurely before training is completed.
+3. Experimenting gradient accumulation
+- By accumulating gradient, we do not need to calculate the gradients of the entire batch but instead do it iteratively in smaller batches, only running the optimisation step when enough gradients are accumulating.
+- This allows for a "larger batch size" without exceeding the machine's memory limit.
  
  #### Future Improvements
  What other things you wish to experiement on? 
