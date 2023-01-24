@@ -137,8 +137,8 @@ However, from qualitative results, we can see that the answers predicted by the 
  
  #### Future Improvements
  What other things you wish to experiement on? 
- Tokenisation without consideration truncation of the question.
- Other models available
+ - Tokenisation without consideration truncation of the question.
+ - Other models available
 
  
 
